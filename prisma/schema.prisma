@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Clients {
+  id         String      @id @default(cuid())
+  name       String
+  document   String      @unique
+  phone      String
+  email      String      @unique
+  password   String
+  created_at DateTime    @default(now())
+  Addresses  Addresses[]
+  Reviews    Reviews[]
+  Orders     Orders[]
+
+  @@map("clients")
+}
+
+model Addresses {
+  id         String   @id @default(cuid())
+  street     String
+  number     String
+  comp       String?
+  district   String
+  cep        String
+  city       String
+  state      String   @db.VarChar(2)
+  created_at DateTime @default(now())
+  default    Boolean  @default(false)
+  client_id  String
+  client     Clients  @relation(fields: [client_id], references: [id])
+
+  @@map("addresses")
+}
+
+model Categories {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  slug         String        @unique
+  active       Boolean
+  thumbnail    String?
+  thumbnail_id String?
+  created_at   DateTime      @default(now())
+  Collections  Collections[]
+  Products     Products[]
+
+  @@map("categories")
+}
+
+model Collections {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  active      Boolean
+  created_at  DateTime   @default(now())
+  category_id String
+  category    Categories @relation(fields: [category_id], references: [id])
+  Products    Products[]
+
+  @@map("collections")
+}
+
+enum FreightPriority {
+  FAST
+  NORMAL
+}
+
+model Products {
+  id                String           @id @default(cuid())
+  name              String           @unique
+  slug              String           @unique
+  active            Boolean
+  short_description String?
+  thumbnail         String?
+  thumbnail_id      String?
+  description       String
+  price             Decimal          @db.Decimal(10, 2)
+  request           Int              @default(0)
+  promotional       Boolean          @default(false)
+  promo_rate        Int              @default(0)
+  shipping_info     Json
+  freight_priority  FreightPriority
+  created_at        DateTime         @default(now())
+  category_id       String
+  category          Categories       @relation(fields: [category_id], references: [id])
+  collection_id     String
+  collection        Collections      @relation(fields: [collection_id], references: [id])
+  Reviews           Reviews[]
+  ProductOptions    ProductOptions[]
+  OrderItems        OrderItems[]
+
+  @@map("products")
+}
+
+model Reviews {
+  id         String   @id @default(cuid())
+  client_id  String
+  client     Clients  @relation(fields: [client_id], references: [id])
+  headline   String
+  content    String
+  rating     Int
+  created_at DateTime @default(now())
+  product_id String
+  product    Products @relation(fields: [product_id], references: [id])
+
+  @@map("reviews")
+}
+
+enum OptionsType {
+  STOCK
+  WITHOUT
+}
+
+model ProductOptions {
+  id         String      @id @default(cuid())
+  headline   String
+  content    String
+  type       OptionsType
+  stock      Int?
+  created_at DateTime    @default(now())
+  product_id String
+  product    Products    @relation(fields: [product_id], references: [id])
+
+  @@map("product_options")
+}
+
+enum OrderStatus {
+  PAYMENT
+  PROCCESSING
+  PRODUCTION
+  PACKING
+  SHIPPING
+  FINISH
+}
+
+enum PaymentStatus {
+  WAITING
+  PAID_OUT
+  REFUSED
+}
+
+model Orders {
+  id             String        @id @default(cuid())
+  shipping_value Decimal       @db.Decimal(10, 2)
+  total          Decimal       @db.Decimal(10, 2)
+  order_status   OrderStatus   @default(PAYMENT)
+  payment_status PaymentStatus @default(WAITING)
+  checkout_id    String?
+  payment_id     String?
+  shipping_id    String?
+  created_at     DateTime      @default(now())
+  client_id      String
+  client         Clients       @relation(fields: [client_id], references: [id])
+
+  @@map("orders")
+}
+
+model OrderItems {
+  id         String   @id @default(cuid())
+  quantity   Int
+  price      Decimal  @db.Decimal(10, 2)
+  created_at DateTime @default(now())
+  product_id String
+  product    Products @relation(fields: [product_id], references: [id])
+
+  @@map("order_items")
+}
+
+model MasterUser {
+  id         String   @id @default(cuid())
+  active     Boolean
+  user       String   @unique
+  password   String
+  created_at DateTime @default(now())
+
+  @@map("master_user")
+}
