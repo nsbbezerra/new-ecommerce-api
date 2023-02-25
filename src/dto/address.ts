@@ -1,0 +1,11 @@
+export interface UpdateAddressDto {
+  id: string;
+  street: string;
+  number: string;
+  comp: string | null;
+  district: string;
+  default: boolean;
+  cep: string;
+  city: string;
+  state: string;
+}
