@@ -125,8 +125,8 @@ model ProductOptions {
   type       OptionsType
   stock      Int?
   created_at DateTime    @default(now())
-  product_id String
-  product    Products    @relation(fields: [product_id], references: [id])
+  product_id String?
+  product    Products?   @relation(fields: [product_id], references: [id])
 
   @@map("product_options")
 }
