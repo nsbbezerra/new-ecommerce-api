@@ -8,4 +8,5 @@ export interface UpdateAddressDto {
   cep: string;
   city: string;
   state: string;
+  client_id: string;
 }

@@ -1,8 +1,8 @@
-import { Addresses } from '@prisma/client';
 import { prisma } from '../../../database';
+import { UpdateAddressDto } from '../../../dto/address';
 
 interface Props {
-  address: Addresses;
+  address: UpdateAddressDto;
 }
 
 const saveAddressRepository = async ({ address }: Props): Promise<void> => {

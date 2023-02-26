@@ -1,9 +1,9 @@
 import { saveAddressService } from '../../../domain/addresses/services';
 import { Request, Response, NextFunction } from 'express';
-import { Addresses } from '@prisma/client';
+import { UpdateAddressDto } from '../../../dto/address';
 
 interface Props {
-  address: Addresses;
+  address: UpdateAddressDto;
 }
 
 export const saveAddressController = async (

@@ -1,9 +1,9 @@
 import { saveClientService } from '../../../domain/clients/services';
 import { Request, Response, NextFunction } from 'express';
-import { Clients } from '@prisma/client';
+import { ClientsDto } from '../../../dto/clients';
 
 interface Props {
-  client: Clients;
+  client: ClientsDto;
 }
 
 export const saveClientController = async (

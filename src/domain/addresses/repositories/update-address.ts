@@ -1,6 +1,6 @@
-import { Addresses } from '@prisma/client';
 import { prisma } from '../../../database';
 import { UpdateAddressDto } from '../../../dto/address';
+import { AddressesEntity } from '../../../entities/address';
 
 interface Props {
   address: UpdateAddressDto;
@@ -8,7 +8,7 @@ interface Props {
 
 const updateAddressRepository = async ({
   address,
-}: Props): Promise<Addresses> => {
+}: Props): Promise<AddressesEntity> => {
   return await prisma.addresses.update({
     where: { id: address.id },
     data: {

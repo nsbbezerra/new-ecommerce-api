@@ -1,9 +1,9 @@
 import { saveClientRepository } from '../repositories';
-import { Clients } from '@prisma/client';
 import AppError from '../../../shared/helpers/app-error';
+import { ClientsDto } from '../../../dto/clients';
 
 interface Props {
-  client: Clients;
+  client: ClientsDto;
 }
 
 const saveClientService = async ({ client }: Props): Promise<void> => {

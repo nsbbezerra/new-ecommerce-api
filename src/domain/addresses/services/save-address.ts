@@ -1,9 +1,10 @@
 import { Addresses } from '@prisma/client';
+import { UpdateAddressDto } from '../../../dto/address';
 import AppError from '../../../shared/helpers/app-error';
 import { saveAddressRepository } from '../repositories';
 
 interface Props {
-  address: Addresses;
+  address: UpdateAddressDto;
 }
 
 const saveAddressService = async ({ address }: Props): Promise<void> => {

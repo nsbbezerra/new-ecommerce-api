@@ -1,8 +1,8 @@
-import { Clients } from '@prisma/client';
 import { prisma } from '../../../database';
+import { ClientsDto } from '../../../dto/clients';
 
 interface Props {
-  client: Clients;
+  client: ClientsDto;
 }
 
 const saveClientRepository = async ({ client }: Props): Promise<void> => {

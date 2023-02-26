@@ -1,5 +1,5 @@
-import { Addresses } from '@prisma/client';
 import { prisma } from '../../../database';
+import { AddressesEntity } from '../../../entities/address';
 
 interface Props {
   clientId: string;
@@ -7,7 +7,7 @@ interface Props {
 
 const getAddressByClientIdRepository = async ({
   clientId,
-}: Props): Promise<Addresses[]> => {
+}: Props): Promise<AddressesEntity[]> => {
   return await prisma.addresses.findMany({
     where: { client_id: clientId },
   });
