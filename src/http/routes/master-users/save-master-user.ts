@@ -12,6 +12,7 @@ export const saveMasterUserController = async (
   next: NextFunction
 ) => {
   const { master } = req.body as Props;
+
   try {
     await saveMasterUserService({ master });
     return res

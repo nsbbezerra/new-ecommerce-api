@@ -43,14 +43,15 @@ model Addresses {
 }
 
 model Categories {
-  id          String        @id @default(cuid())
-  name        String        @unique
-  slug        String        @unique
-  active      Boolean
-  thumbnail   String?
-  created_at  DateTime      @default(now())
-  Collections Collections[]
-  Products    Products[]
+  id           String        @id @default(cuid())
+  name         String        @unique
+  slug         String        @unique
+  active       Boolean
+  thumbnail    String?
+  thumbnail_id String?
+  created_at   DateTime      @default(now())
+  Collections  Collections[]
+  Products     Products[]
 
   @@map("categories")
 }
@@ -80,6 +81,7 @@ model Products {
   active            Boolean
   short_description String?
   thumbnail         String?
+  thumbnail_id      String?
   description       String
   price             Decimal          @db.Decimal(10, 2)
   request           Int              @default(0)
