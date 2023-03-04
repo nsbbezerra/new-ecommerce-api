@@ -24,16 +24,13 @@ const deleteThumbnailService = async ({
   to,
   thumbnailId,
 }: Props): Promise<void> => {
-  bucket
-    .file(thumbnailId)
-    .delete()
-    .then(() => {
-      deleteThumbnail(to, id);
-    })
-    .catch((error) => {
-      const { message } = error as Error;
-      throw new AppError(message, 400);
-    });
+  try {
+    await bucket.file(thumbnailId).delete();
+
+    deleteThumbnail(to, id);
+  } catch (error) {
+    throw new AppError('Ocorreu um erro ao excluir a imagem', 400);
+  }
 };
 
 export default deleteThumbnailService;
