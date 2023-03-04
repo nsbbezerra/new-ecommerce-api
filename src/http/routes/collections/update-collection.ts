@@ -1,6 +1,5 @@
 import { updateCollectionsService } from '../../../domain/collections/services';
 import { Request, Response, NextFunction } from 'express';
-import { Collections } from '@prisma/client';
 import { CollectionsDto } from '../../../dto/collections';
 
 interface Props {

@@ -6,3 +6,15 @@ export interface CollectionsEntity {
   created_at: Date;
   category_id: string;
 }
+
+export interface CollectionsWithRelationshipEntity {
+  id: string;
+  name: string;
+  slug: string;
+  active: boolean;
+  created_at: Date;
+  category_id: string;
+  category: {
+    name: string;
+  };
+}

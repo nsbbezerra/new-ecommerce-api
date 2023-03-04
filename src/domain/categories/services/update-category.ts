@@ -7,12 +7,10 @@ interface Props {
   category: CategoriesDto;
 }
 
-const updateCategoryService = async ({
-  category,
-}: Props): Promise<Categories> => {
+const updateCategoryService = async ({ category }: Props): Promise<void> => {
   if (!category)
     throw new AppError('As informações da categoria são obrigatórias', 400);
-  return await updateCategoryRepository({ category });
+  await updateCategoryRepository({ category });
 };
 
 export default updateCategoryService;

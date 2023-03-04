@@ -5,5 +5,5 @@ export interface CategoriesEntity {
   active: boolean;
   thumbnail?: string | null;
   thumbnail_id?: string | null;
-  created_at: Date;
+  created_at?: Date;
 }
