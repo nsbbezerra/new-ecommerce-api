@@ -1,7 +1,9 @@
-import { ProductsEntity } from '../../../entities/products';
+import { ProductsWithRelationshipEntity } from '../../../entities/products';
 import { getAllProductsRepository } from '../repositories';
 
-const getAllProductsService = async (): Promise<ProductsEntity[]> => {
+const getAllProductsService = async (): Promise<
+  ProductsWithRelationshipEntity[]
+> => {
   return await getAllProductsRepository();
 };
 

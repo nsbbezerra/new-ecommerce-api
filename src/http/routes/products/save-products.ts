@@ -14,9 +14,11 @@ export const saveProductController = async (
   const { product } = req.body as Props;
 
   try {
-    await saveProductService({ product });
+    const { id: productId } = await saveProductService({ product });
 
-    return res.status(200).json({ message: 'Produto cadastrado com suceso.' });
+    return res
+      .status(200)
+      .json({ message: 'Produto cadastrado com suceso.', productId });
   } catch (error) {
     next(error);
   }
