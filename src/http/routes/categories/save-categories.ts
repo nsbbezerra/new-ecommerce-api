@@ -14,9 +14,11 @@ export const saveCategoryController = async (
   const { category } = req.body as Props;
 
   try {
-    await saveCategoryService({ category });
+    const { categoryId } = await saveCategoryService({ category });
 
-    return res.status(200).json({ message: 'Categoria salva com sucesso' });
+    return res
+      .status(200)
+      .json({ message: 'Categoria salva com sucesso', categoryId });
   } catch (error) {
     next(error);
   }

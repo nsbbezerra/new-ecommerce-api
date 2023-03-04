@@ -6,10 +6,16 @@ interface Props {
   category: CategoriesDto;
 }
 
-const saveCategoryService = async ({ category }: Props): Promise<void> => {
+interface Response {
+  categoryId: string;
+}
+
+const saveCategoryService = async ({ category }: Props): Promise<Response> => {
   if (!category)
     throw new AppError('As informações da categoria são obrigatórias', 400);
-  await saveCategoryRepository({ category });
+  const { id } = await saveCategoryRepository({ category });
+
+  return { categoryId: id };
 };
 
 export default saveCategoryService;

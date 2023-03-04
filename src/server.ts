@@ -23,8 +23,10 @@ app.use((error: HTTPError, req: Request, res: Response, next: NextFunction) => {
     message = error.message;
   }
 
+  console.error(message);
+
   return res.status(400).json({
-    message: `Um erro ocorreu ao processar a operação. ERRO: ${message}`,
+    message,
   });
 });
 

@@ -8,6 +8,7 @@ import masterUsersRoutes from './master-users';
 import productOptionsRoutes from './product-options';
 import productsRoutes from './products';
 import reviewsRoutes from './reviews';
+import thumbnailRoutes from './thumbnail';
 
 const router = routes();
 
@@ -20,5 +21,6 @@ router.use('/reviews', reviewsRoutes);
 router.use('/product-options', productOptionsRoutes);
 router.use('/master-users', masterUsersRoutes);
 router.use('/banners', bannersRoutes);
+router.use('/thumbnail', thumbnailRoutes);
 
 export { router };

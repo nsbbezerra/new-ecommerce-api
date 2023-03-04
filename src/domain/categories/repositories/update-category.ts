@@ -12,10 +12,8 @@ const updateCategoryRepository = async ({
   return await prisma.categories.update({
     where: { id: category.id },
     data: {
-      active: category.active,
       name: category.name,
       slug: category.slug,
-      thumbnail: category.thumbnail,
     },
   });
 };
