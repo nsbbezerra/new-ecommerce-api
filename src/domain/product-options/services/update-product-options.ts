@@ -15,7 +15,14 @@ const updateProductOptionsService = async ({
       'As informações das opções de produto são obrigatórias',
       400
     );
-  return await updateProductOptionsRepository({ options });
+  return await updateProductOptionsRepository({
+    options: {
+      content: options.content,
+      id: options.id,
+      headline: options.headline,
+      stock: Number(options.stock),
+    },
+  });
 };
 
 export default updateProductOptionsService;

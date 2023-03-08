@@ -1,8 +1,7 @@
 export interface ProductOptionsDto {
-  id: string;
+  id?: string;
   headline: string;
   content: string;
-  type: 'STOCK' | 'WITHOUT';
   stock: number | null;
-  product_id: string | null;
+  product_id?: string | null;
 }

@@ -1,3 +1,5 @@
+import { FreightPriority, StockType } from '@prisma/client';
+
 export interface ProductsDto {
   id: string;
   name: string;
@@ -16,7 +18,9 @@ export interface ProductsDto {
     height: number;
     weight: number;
   };
-  freight_priority: 'FAST' | 'NORMAL';
+  freight_priority: FreightPriority | undefined;
   category_id: string;
   collection_id: string;
+  stock_type?: StockType | null | undefined;
+  stock?: number | null;
 }

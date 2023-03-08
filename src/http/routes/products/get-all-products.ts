@@ -1,15 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
 import { getAllProductsService } from '../../../domain/products/services';
 
+interface Props {
+  page: number;
+  limit: number;
+}
+
 export const getAllProductsController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const products = await getAllProductsService();
+  const { page, limit } = req.params as unknown as Props;
 
-    return res.status(200).json(products);
+  try {
+    const { count, products } = await getAllProductsService({ page, limit });
+
+    return res.status(200).json({ products, count });
   } catch (error) {
     next(error);
   }

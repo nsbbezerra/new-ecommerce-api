@@ -1,13 +1,28 @@
 import { ProductsWithRelationshipEntity } from '../../../entities/products';
 import { prisma } from '../../../database';
 
-const getAllProductsRepository = async (): Promise<
-  ProductsWithRelationshipEntity[]
-> => {
-  return await prisma.products.findMany({
+interface Props {
+  page: number;
+  limit: number;
+}
+
+interface Response {
+  products: ProductsWithRelationshipEntity[];
+  count: number;
+}
+
+const getAllProductsRepository = async ({
+  limit,
+  page,
+}: Props): Promise<Response> => {
+  const products = await prisma.products.findMany({
+    skip: Number(page),
+    take: Number(limit),
     select: {
       active: true,
       created_at: true,
+      stock: true,
+      stock_type: true,
       id: true,
       description: true,
       name: true,
@@ -20,6 +35,7 @@ const getAllProductsRepository = async (): Promise<
       price: true,
       slug: true,
       thumbnail: true,
+      thumbnail_id: true,
       category: {
         select: {
           id: true,
@@ -32,8 +48,25 @@ const getAllProductsRepository = async (): Promise<
           name: true,
         },
       },
+      ProductOptions: {
+        select: {
+          id: true,
+          content: true,
+          headline: true,
+          stock: true,
+          product_id: true,
+        },
+      },
+    },
+    orderBy: {
+      name: 'asc',
     },
   });
+  const { _count } = await prisma.products.aggregate({
+    _count: true,
+  });
+
+  return { products, count: _count };
 };
 
 export default getAllProductsRepository;

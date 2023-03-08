@@ -74,6 +74,12 @@ enum FreightPriority {
   NORMAL
 }
 
+enum StockType {
+  OFF
+  UNITY
+  CUSTOM
+}
+
 model Products {
   id                String           @id @default(cuid())
   name              String           @unique
@@ -88,7 +94,9 @@ model Products {
   promotional       Boolean          @default(false)
   promo_rate        Int              @default(0)
   shipping_info     Json
+  stock_type        StockType?
   freight_priority  FreightPriority
+  stock             Int?
   created_at        DateTime         @default(now())
   category_id       String
   category          Categories       @relation(fields: [category_id], references: [id])
@@ -115,20 +123,14 @@ model Reviews {
   @@map("reviews")
 }
 
-enum OptionsType {
-  STOCK
-  WITHOUT
-}
-
 model ProductOptions {
-  id         String      @id @default(cuid())
+  id         String    @id @default(cuid())
   headline   String
   content    String
-  type       OptionsType
   stock      Int?
-  created_at DateTime    @default(now())
+  created_at DateTime  @default(now())
   product_id String?
-  product    Products?   @relation(fields: [product_id], references: [id])
+  product    Products? @relation(fields: [product_id], references: [id])
 
   @@map("product_options")
 }
