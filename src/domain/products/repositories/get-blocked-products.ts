@@ -1,23 +1,13 @@
 import { ProductsWithRelationshipEntity } from '../../../entities/products';
 import { prisma } from '../../../database';
 
-interface Props {
-  page: number;
-  limit: number;
-}
-
-interface Response {
-  products: ProductsWithRelationshipEntity[];
-  count: number;
-}
-
-const getAllProductsRepository = async ({
-  limit,
-  page,
-}: Props): Promise<Response> => {
-  const products = await prisma.products.findMany({
-    skip: Number(page),
-    take: Number(limit),
+const getBlockedProductsRepository = async (): Promise<
+  ProductsWithRelationshipEntity[]
+> => {
+  return await prisma.products.findMany({
+    where: {
+      active: false,
+    },
     select: {
       active: true,
       created_at: true,
@@ -65,11 +55,6 @@ const getAllProductsRepository = async ({
       name: 'asc',
     },
   });
-  const { _count } = await prisma.products.aggregate({
-    _count: true,
-  });
-
-  return { products, count: _count };
 };
 
-export default getAllProductsRepository;
+export default getBlockedProductsRepository;

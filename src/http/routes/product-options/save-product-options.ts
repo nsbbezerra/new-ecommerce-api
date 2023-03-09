@@ -14,11 +14,14 @@ export const saveProductOptionsController = async (
   const { options } = req.body as Props;
 
   try {
-    await saveProductOptionsService({ options });
+    const productOptions = await saveProductOptionsService({ options });
 
     return res
       .status(200)
-      .json({ message: 'Opção de produtos cadastrada com sucesso.' });
+      .json({
+        message: 'Opção de produtos cadastrada com sucesso.',
+        productOptions,
+      });
   } catch (error) {
     next(error);
   }
